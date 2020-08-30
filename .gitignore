@@ -1,0 +1,9 @@
+*.exe
+mod/*
+obj/*
+lib/*.o
+lib/*.mod
+*pyc
+*.out
+*/*/work/
+
