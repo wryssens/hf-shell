@@ -1,6 +1,7 @@
 # HF-SHELL
 **by W. Ryssens & Y. Alhassid** 
    
+[![DOI](https://zenodo.org/badge/288576572.svg)](https://zenodo.org/badge/latestdoi/288576572)
 [![License: GPL v3](https://img.shields.io/github/license/wryssens/hf-shell)](https://www.gnu.org/licenses/gpl-3.0)
 
 We present the code HF-SHELL for solving the self-consistent mean-field equations for configuration-interaction shell model Hamiltonians in the proton-neutron formalism. The code can calculate both ground-state and finite-temperature properties in the Hartree-Fock (HF), HF+Bardeen-Cooper-Schrieffer (HF+BCS), and the Hartree-Fock-Bogoliubov (HFB) mean-field approximations. Particle-number projection after variation is incorporated to reduce the grand-canonical ensemble to the  canonical ensemble, making the code particularly suitable for the calculation of nuclear state densities. The code does not impose axial symmetry and allows for  triaxial quadrupole deformations. The self-consistency cycle is particularly robust through the use of the heavy-ball optimization technique and the implementation of different options to constrain the quadrupole degrees of freedom.
