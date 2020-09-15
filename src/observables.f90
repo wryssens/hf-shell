@@ -142,9 +142,6 @@ contains
       enddo
       oneb_energy(1) = 2 * oneb_energy(1) !  Time-reversal
 
-      ! But don't include the value of the constraints!            
-      oneb_energy(1) = oneb_energy(1) - lambda20 * sum(Q20(1,:))             &
-      &                               - lambda22 * sum(Q22(1,:))    
       !-----------------------------------------------------------------------
       ! two-body contribution, particle-hole part
       twob_energy(1) = 0
@@ -162,8 +159,8 @@ contains
       twob_energy(1) = 0.5  * twob_energy(1)*2 
 
       ! But don't include the value of the constraints!            
-      twob_energy(1) = twob_energy(1) - lambda20 * sum(Q20(1,:))             &
-      &                               - lambda22 * sum(Q22(1,:))    
+      twob_energy(1) = twob_energy(1) - 0.5*lambda20 * sum(Q20(1,:))           &
+      &                               - 0.5*lambda22 * sum(Q22(1,:))    
 
       !-----------------------------------------------------------------------
       ! two-body contribution, particle-particle part
