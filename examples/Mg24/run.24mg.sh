@@ -37,21 +37,37 @@ cd work
 Z=4
 N=4
 
-for q1 in `seq 0 2 18`
+
+for q1 in  `seq 0 1 20`
 do
 
-maxq2=8
-if(( q1 > 15 )); then
-maxq2=4
+maxq2=12
+
+if(( q1 > 5 )); then
+maxq2=11
+fi
+
+if(( q1 > 8 )); then
+maxq2=9
+fi
+
+if(( q1 > 12 )); then
+maxq2=7
+fi
+
+if(( q1 > 16 )); then
+maxq2=6
 fi
 
 if(( q1 > 17 )); then
-maxq2=0
+maxq2=4
 fi
 
-if(( q1 < 3 )); then
-maxq2=12
+if(( q1 > 19 )); then
+maxq2=1
 fi
+
+
 ################################################################################
 # First all calculations with q2 = 0
 q2=0
@@ -60,7 +76,7 @@ cat << EOF > in.data
 spsfile   ="../$inter/pn.sps", 
 interfile ="../$inter/$inter.int", 
 qfile     =""
-maxiter   =2000, printiter=100
+maxiter   =4000, printiter=100
 ptype     ='BCS'
 outfile="Mg24.$q1.$q2.out"
 e_prec=1e-12
@@ -88,7 +104,7 @@ constrainttype = 2
 q1target =$q1
 q2target =$q2
 moreconfigs=.true.
-stepsize=0.05
+stepsize=0.0075
 momentum=0.0
 denmix=0.1
 lambda20=0
@@ -103,7 +119,7 @@ mv Mg24.$q1.$q2.out ../tables
 
 ################################################################################
 # Then all calculations with q2 != 0
-for q2 in `seq 2 2 $maxq2`
+for q2 in `seq 1 1 $maxq2`
 do
 cat << EOF > in.data
 &modelspace
@@ -129,9 +145,9 @@ constrainttype = 2
 q1target =$q1
 q2target =$q2
 moreconfigs=.true.
-stepsize=0.05
+stepsize=0.0075
 momentum=0.0
-denmix=0.1
+denmix=0.05
 lambda20=0
 lambda22=0
 /
@@ -144,3 +160,57 @@ mv Mg24.$q1.$q2.out ../tables/
 done
 done
 
+cat << EOF > in.data
+&modelspace
+spsfile   ="../$inter/pn.sps", 
+interfile ="../$inter/$inter.int", 
+qfile     =""
+maxiter   =2000, printiter=100
+ptype     ='HFB'
+outfile="Mg24.uncon.out"
+e_prec=1e-9
+q_prec=1e-3
+/
+EOF
+
+cat << EOF >> in.data
+&config
+neutrons   = $N,
+protons    = $Z,
+inversetemp= 0.4
+moreconfigs=.true.
+/
+&config
+neutrons   = $N,
+protons    = $Z,
+inversetemp= 0.6
+constraintiter=10
+constrainttype=2
+q1target =4.0
+q2target =0.0
+moreconfigs=.true.
+/
+&config
+neutrons   = $N,
+protons    = $Z,
+inversetemp= 0.8
+constraintiter=10
+q1target =10.0
+q2target =4.0
+moreconfigs=.true.
+/
+&config
+neutrons   = $N,
+protons    = $Z,
+inversetemp= 10.0
+constrainttype = 2
+constraintiter=10
+q1target =10.0
+q2target =4.0
+moreconfigs=.true.
+/
+EOF
+
+./hf_shell.exe < in.data > HF.out
+mv Mg24.uncon.out ../tables/
+rm hf_shell.exe
