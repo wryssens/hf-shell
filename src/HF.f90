@@ -68,6 +68,7 @@ contains
     occ = 0
     
     running_count = 0
+    allocate(indices(proton_lev))
     indices = orderenergies(hfenergies(1:proton_lev))
     do i=1, proton_lev 
       ii = indices(i)
@@ -77,10 +78,12 @@ contains
 
       if(running_count .ge. protons) exit
     enddo
+    deallocate(indices)
 
     running_count = 0
 
     if(neutrons.eq.0) return
+    allocate(indices(neutron_lev))
     indices = orderenergies(hfenergies(proton_lev+1:nlev))
     do i=1, neutron_lev 
       ii = indices(i) + proton_lev
@@ -90,7 +93,7 @@ contains
 
       if(running_count .ge. neutrons) exit
     enddo
-    
+    deallocate(indices)    
   end subroutine hf_fill
 
   subroutine calcdensity_HF(save_old)

@@ -8,8 +8,8 @@ MODDIR :=   mod
 #Default compiler is gfortran
 CXX :=   gfortran
 
-ifeq ($(CXX),gfortran)
-	CXXFLAGS := -O3 -J$(MODDIR) -Wall 
+ifneq (,$(findstring gfortran,$(CXX)))
+	CXXFLAGS := -O3 -J$(MODDIR) -Wall -Wno-maybe-uninitialized
 else ifeq ($(CXX),ifort)
 	CXXFLAGS := -O3 -no-wrap-margin -module $(MODDIR)
 endif

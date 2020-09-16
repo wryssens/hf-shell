@@ -144,7 +144,7 @@ contains
         neutron_orbits = 0
         proton_orbits  = 0
         do i=1,norbits
-            read(1,*, iostat=io), rubbish, qn(i), ql(i), qj(i), qt(i)       
+            read(1,*, iostat=io) rubbish, qn(i), ql(i), qj(i), qt(i)       
 
             if(qt(i) .gt. 0) proton_orbits  = proton_orbits  + 1
             if(qt(i) .lt. 0) neutron_orbits = neutron_orbits + 1    
@@ -235,11 +235,11 @@ contains
       character(len=*), intent(in) :: wffile
 
       open(unit=10, file=wffile, form='unformatted')      
-      write(10), neutron_lev, proton_lev
-      write(10), hfenergies
-      write(10), occ
-      write(10), kappa
-      write(10), hfbasis
+      write(10) neutron_lev, proton_lev
+      write(10) hfenergies
+      write(10) occ
+      write(10) kappa
+      write(10) hfbasis
       close(10)
     end subroutine write_wf
 
@@ -252,7 +252,7 @@ contains
       character(len=*), intent(in) :: wffile
 
       open(unit=10, file=wffile, form='unformatted')      
-      read(10), neutron_size, proton_size
+      read(10) neutron_size, proton_size
 
       if(neutron_size .ne. neutron_lev) then
         print *, 'Number of neutron states on file does not match the modelspace'
@@ -263,14 +263,14 @@ contains
         stop
       endif
 
-      read(10), hfenergies
-      read(10), occ
+      read(10) hfenergies
+      read(10) occ
       if(pairingtype .eq.1) then
-        read(10), kappa
+        read(10) kappa
       else
         read(10)
       endif
-      read(10), hfbasis
+      read(10) hfbasis
       close(10)
     end subroutine read_wf
 

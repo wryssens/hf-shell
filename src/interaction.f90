@@ -112,8 +112,8 @@ contains
         ! read and the single-particle energies
         menumber = 0
 
-        read(1,*),  menumber, orbit_energies(1:proton_orbits)
-        read(1,*),  orbit_energies(proton_orbits+1:norbits)
+        read(1,*)  menumber, orbit_energies(1:proton_orbits)
+        read(1,*)  orbit_energies(proton_orbits+1:norbits)
     
         ! Assigning the energies to the sp levels.
         do i=1,nlev  
@@ -136,7 +136,7 @@ contains
         !-----------------------------------------------------------------------   
         ! Reading the coupled matrix elements (only the antisymmetric ones)
         do me=1,menumber
-            read(1,*), a, b, c, d, j, v 
+            read(1,*) a, b, c, d, j, v 
 
             vorbit(a,b,c,d,J+1) = v 
             pab = (-1)**(int(qj(a) + qj(b)) + J + 1)

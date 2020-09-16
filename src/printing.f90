@@ -243,7 +243,7 @@ contains
 
         print 1
         print 2, total_energy(1), oneb_energy(1), twob_energy(1),          & 
-        &        pairing_energy(1,:), lnenergy(1,:)
+        &        pairing_energy(1,:)
         print 3, entropy(1)
         print 4, free_energy(1), oneb_energy(1) - entropy(1)/inversetemp
         print *

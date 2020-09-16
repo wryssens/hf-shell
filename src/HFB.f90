@@ -343,6 +343,7 @@ contains
     integer :: iter
 
     A = chempot
+    allocate(H(size(gaps,1), size(gaps,2)))
     H  = constructHFBhamil(gaps, hfe)
     FA = diag_HFB(H, A, beta, bogo, qpe, parlev, config) 
     FA = FA - particles

@@ -64,7 +64,7 @@ program hf_shell
           exit
       endif       
       
-      !-----------------------------------------------------------------------
+      !-------------------------------------------------------------------------
       ! Guess an initial configuration if starting or asking for a fresh start
       if(.not. allocated(HFBasis)) then 
           call iniHF
@@ -79,12 +79,14 @@ program hf_shell
           ! Calculating some matrix elements
           call calc_ang_hf()    
           call calc_par_hf()
-
           call solve_pairing(inversetemp)               
 
           call calcdensity(.false.)            
           call calc_quadrupole(.true.)
       endif
+      call solve_pairing(inversetemp) 
+      call calcdensity(.false.)            
+      call calc_quadrupole(.true.)
       !-----------------------------------------------------------------------
       ! Construct the single-particle hamiltonian
       spham = constructsphamil(rho, lambda20, lambda22)    

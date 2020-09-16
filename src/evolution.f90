@@ -70,7 +70,8 @@ contains
         integer, allocatable :: indices(:)
         integer              :: i,j, ii, jj
         real*8               :: overlap
-
+  
+        allocate(indices(nlev))
         indices = orderenergies(hfenergies)
    
         do i=1,nlev
@@ -85,7 +86,7 @@ contains
                 HFBasis(:,jj) = HFBasis(:,jj) - overlap * HFBasis(:,ii)
             enddo
         enddo
-
+        deallocate(indices)
     end subroutine orthonormalize
 
     subroutine gradientstep(iteration)
