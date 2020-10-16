@@ -60,16 +60,22 @@ for k in ind:
     E_c[k] = np.nan
 
 # Plot the remaining data
-ax.semilogy(E_c - E_c[0], rho_s, 'k', ms=0.2)
-axins.semilogy(E_c - E_c[0], rho_s, 'k', ms=0.2)
+ax.semilogy(E_c - E_c[0], rho_s, 'k', ms=0.2, label='FTHFB')
+axins.semilogy(E_c - E_c[0], rho_s, 'k', ms=0.2, label='FTHFB')
 
-# All the data is plotted, now we just add all relevant plotting.
-axins.set_xlim(0.0,2.3)
-axins.set_ylim(0.5,300)
+# Plot the SMMC data
+dat = np.loadtxt('lvl_dy162_smmc.dat')
+ax.errorbar(dat[:,1], np.exp(dat[:,2]), yerr = np.exp(dat[:,2])*dat[:,3], 
+           marker='o', color='b', linestyle='', ms=4, mfc='white', label='SMMC')
+axins.errorbar(dat[:,1], np.exp(dat[:,2]), yerr = np.exp(dat[:,2])*dat[:,3], 
+               marker='o', color='b', linestyle='', ms=4, mfc='white', zorder=0)
+
+# All the data is plotted, now we just add all relevant plotting details.
+axins.set_xlim(-0.05,2.8)
+axins.set_ylim(0.5,2000)
 
 ax.tick_params(axis='both', direction='in', which='both')
 axins.tick_params(axis='both', direction='in', which='both')
-
 
 axins.set_xticks(np.arange(0,2.5,1.0))
 
@@ -79,8 +85,8 @@ axins.set_ylabel(r'$\rho$ (MeV$^{-1}$)')
 
 axins.xaxis.set_label_position('top')
 
-ax.set_xlim(0.0,35)
-ax.set_ylim(0.1,10e18)
+ax.set_xlim(0.0,45)
+ax.set_ylim(0.1,10e19)
 
 alpha = "0.7"
 mark_inset(ax, axins, loc1=2, loc2=3, fc="none", ec=alpha, ls='--')
@@ -88,6 +94,7 @@ mark_inset(ax, axins, loc1=2, loc2=3, fc="none", ec=alpha, ls='--')
 ax.set_xlabel(r'$E_x$ (MeV)')
 ax.set_ylabel(r'$\rho$ (MeV$^{-1}$)')
 
+ax.legend(loc='upper left')
 plt.savefig('Dy162.eps', bbox_inches='tight')
 plt.close()
 os.system('rm level_densities.py')
