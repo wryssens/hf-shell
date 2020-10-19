@@ -38,7 +38,7 @@ Z=4
 N=4
 
 
-for q1 in  `seq 0 1 20`
+for q1 in  `seq 0 2 19`
 do
 
 maxq2=12
@@ -48,7 +48,7 @@ maxq2=11
 fi
 
 if(( q1 > 8 )); then
-maxq2=9
+maxq2=7
 fi
 
 if(( q1 > 12 )); then
@@ -119,7 +119,7 @@ mv Mg24.$q1.$q2.out ../tables
 
 ################################################################################
 # Then all calculations with q2 != 0
-for q2 in `seq 1 1 $maxq2`
+for q2 in `seq 1 2 $maxq2`
 do
 cat << EOF > in.data
 &modelspace

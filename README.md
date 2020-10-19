@@ -77,7 +77,7 @@ We also provide an auxiliary python script **level_densities.py** (which relies 
 
 The examples folder includes ready-to-run example scripts for the following applications:
 
-* Free energy surface calculation (including triaxial deformations) for Mg24
+* Mean-field minimum and triaxial free energy surface calculation for Mg24
 * Calculation of the pairing transition for 144Nd
 * Calculation of the shape transition for 162Dy 
 * Calculation of the state density for 162Dy
