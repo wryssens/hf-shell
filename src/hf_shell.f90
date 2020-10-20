@@ -42,6 +42,7 @@ program hf_shell
     !---------------------------------------------------------------------------
     ! Construct the two-body interaction
     call readinteraction(interfile)
+    call scaleinteraction()
     call construct_interaction()
 
     open(unit=11, file=outfile)

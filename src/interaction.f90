@@ -8,6 +8,14 @@ module interaction
     implicit none
 
     !---------------------------------------------------------------------------
+    ! (Optional) scaling for the TBMEs, if desired for the interaction.
+    ! This multiplies all TBMEs with 
+    !
+    !      v_{ijkl} =>  (Aref/A)^x v_{ijkl}
+    !
+    integer :: TBME_Aref  = -1, TBME_A = -1
+    real*8  :: TBME_x     = -1.0 
+    !---------------------------------------------------------------------------
     !  Contains the matrix elements of the interaction
     !
     ! Vorbit => coupled mes V_abcd(J)  
@@ -161,6 +169,25 @@ contains
         enddo
         close(unit=1)      
      end subroutine readinteraction
+
+     subroutine scaleinteraction()
+        !-----------------------------------------------------------------------
+        ! Scale the J-coupled TBMEs with a mass-dependent factor, if the user
+        ! asked for it.
+        !     v_{ijkl} =>  (Aref/A)^x v_{ijkl}
+        !-----------------------------------------------------------------------
+        real*8 :: factor
+
+        if(.not.allocated(vorbit)) then
+            print *, 'Something went wrong in scaleinteraction.'
+            stop    
+        endif
+        if(TBME_A.gt.0) then
+            factor = (TBME_Aref * 1.0d0 / TBME_A)**TBME_x
+            vorbit = factor * vorbit
+        endif 
+
+     end subroutine scaleinteraction
 
      subroutine construct_interaction()
         !-----------------------------------------------------------------------

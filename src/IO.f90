@@ -39,6 +39,10 @@ contains
         4 format ('  Interaction file          = ', 50a)
         5 format ('  Single-partile space file = ', 50a)
         6 format ('  Quadrupole file           = ', 50a)
+       41 format ('  TBME scaling (Aref/A)^x ', /, &
+        &         '    A    = ', i4,  /, &
+        &         '    Aref = ', i4,  /, &
+        &         '    x    = ', f5.3)
        62 format ('  Other output file         = ', 50a)
        63 format ('  Spherical shells        p = ', i4)
        64 format ('                          n = ', i4)
@@ -80,6 +84,10 @@ contains
         print 4, interfile
         print 5, spsfile
         print 6, qfile
+        if(TBME_A .ne. -1) then
+            print 41, TBME_A, TBME_Aref, TBME_x
+        endif
+        print * 
         print 63, proton_orbits 
         print 64, neutron_orbits
         print 65, proton_lev
@@ -163,7 +171,8 @@ contains
         character(len=3) :: ptype = 'HF '
 
         namelist /modelspace/ spsfile, interfile, qfile, printiter, maxiter,   &
-        &                     e_prec, q_prec, outfile, ptype
+        &                     e_prec, q_prec, outfile, ptype,                  & 
+        &                     TBME_Aref, TBME_A, TBME_x
 
         read(unit=*, nml=modelspace)
 
