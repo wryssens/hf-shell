@@ -20,7 +20,7 @@
 # four different values of the inverse temperature beta.
 ################################################################################
 
-inter='usdb.24'
+inter='usdb'
 
 if [ ! -d "work" ]; then
   mkdir work
@@ -81,11 +81,21 @@ ptype     ='BCS'
 outfile="Mg24.$q1.$q2.out"
 e_prec=1e-12
 q_prec=1e-6
+TBME_A=24
+TBME_Aref=18
+TBME_x = 0.3
 /
 EOF
 
 for beta in 0.4 0.6 0.8 10.0 
 do
+
+if [ "$beta" == "10.0" ]
+then 
+mc=".false."
+else
+mc=".true."
+fi
 
 # note that for this example, we manually set stepsize and momentum parameters
 # as well as a slowdown for the mixing of the density. 
@@ -103,12 +113,12 @@ inversetemp= $beta
 constrainttype = 2
 q1target =$q1
 q2target =$q2
-moreconfigs=.true.
 stepsize=0.0075
 momentum=0.0
 denmix=0.1
 lambda20=0
 lambda22=0
+moreconfigs=$mc
 /
 EOF
 
@@ -116,7 +126,6 @@ done
 echo "Running q1=$q1, q2=$q2"
 ./hf_shell.exe < in.data > HF.out
 mv Mg24.$q1.$q2.out ../tables
-
 ################################################################################
 # Then all calculations with q2 != 0
 for q2 in `seq 1 2 $maxq2`
@@ -131,11 +140,23 @@ ptype     ='BCS'
 outfile="Mg24.$q1.$q2.out"
 e_prec=1e-9
 q_prec=1e-3
+TBME_A=24
+TBME_Aref=18
+TBME_x = 0.3
 /
 EOF
 
 for beta in 0.4 0.6 0.8 10.0 
 do
+
+if [ "$beta" == "10.0" ]
+then 
+mc=".false."
+else
+mc=".true."
+fi
+
+
 cat << EOF >> in.data
 &config
 neutrons   = $N,
@@ -144,7 +165,7 @@ inversetemp= $beta
 constrainttype = 2
 q1target =$q1
 q2target =$q2
-moreconfigs=.true.
+moreconfigs=$mc
 stepsize=0.0075
 momentum=0.0
 denmix=0.05
@@ -160,57 +181,60 @@ mv Mg24.$q1.$q2.out ../tables/
 done
 done
 
-cat << EOF > in.data
-&modelspace
-spsfile   ="../$inter/pn.sps", 
-interfile ="../$inter/$inter.int", 
-qfile     =""
-maxiter   =2000, printiter=100
-ptype     ='HFB'
-outfile="Mg24.uncon.out"
-e_prec=1e-9
-q_prec=1e-3
-/
-EOF
+#cat << EOF > in.data
+#&modelspace
+#spsfile   ="../$inter/pn.sps", 
+#interfile ="../$inter/$inter.int", 
+#qfile     =""
+#maxiter   =2000, printiter=100
+#ptype     ='HFB'
+#outfile="Mg24.uncon.out"
+#e_prec=1e-9
+#q_prec=1e-3
+#TBME_A=24
+#TBME_Aref=18
+#TBME_x = 0.3
+#/
+#EOF
 
-cat << EOF >> in.data
-&config
-neutrons   = $N,
-protons    = $Z,
-inversetemp= 0.4
-moreconfigs=.true.
-/
-&config
-neutrons   = $N,
-protons    = $Z,
-inversetemp= 0.6
-constraintiter=10
-constrainttype=2
-q1target =4.0
-q2target =0.0
-moreconfigs=.true.
-/
-&config
-neutrons   = $N,
-protons    = $Z,
-inversetemp= 0.8
-constraintiter=10
-q1target =10.0
-q2target =4.0
-moreconfigs=.true.
-/
-&config
-neutrons   = $N,
-protons    = $Z,
-inversetemp= 10.0
-constrainttype = 2
-constraintiter=10
-q1target =10.0
-q2target =4.0
-moreconfigs=.true.
-/
-EOF
+#cat << EOF >> in.data
+#&config
+#neutrons   = $N,
+#protons    = $Z,
+#inversetemp= 0.4
+#moreconfigs=.true.
+#/
+#&config
+#neutrons   = $N,
+#protons    = $Z,
+#inversetemp= 0.6
+#constraintiter=10
+#constrainttype=2
+#q1target =4.0
+#q2target =0.0
+#moreconfigs=.true.
+#/
+#&config
+#neutrons   = $N,
+#protons    = $Z,
+#inversetemp= 0.8
+#constraintiter=10
+#q1target =10.0
+#q2target =4.0
+#moreconfigs=.true.
+#/
+#&config
+#neutrons   = $N,
+#protons    = $Z,
+#inversetemp= 10.0
+#constrainttype = 2
+#constraintiter=10
+#q1target =10.0
+#q2target =4.0
+#moreconfigs=.false.
+#/
+#EOF
 
-./hf_shell.exe < in.data > HF.out
-mv Mg24.uncon.out ../tables/
-rm hf_shell.exe
+#./hf_shell.exe < in.data > HF.out
+#mv Mg24.uncon.out ../tables/
+#rm hf_shell.exe
