@@ -820,10 +820,6 @@ contains
     !---------------------------------------------------------------------------
     ! Calculation of the expectation values of J^2 and the Belyaev moment of
     ! inertia for the three Cartesian directions.
-    !
-    ! <J_mu^2 >  = sum_{ab} J^20_{mu, ab} (1 - f_a  - f_b) 
-    !            + sum_{ab} J^11_{mu, ab} f_a (1 - f_b)         
-    !
     !---------------------------------------------------------------------------
     integer             :: k,l,  NP, NN, NT
     real*8              :: ME(3), weight, fl, dfde, fk
