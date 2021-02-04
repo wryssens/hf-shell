@@ -226,11 +226,11 @@ contains
           stop  
         endif
 
-        if(stepsize.ne.0 .or. momentum.ne. 0) then
+        if(abs(stepsize).gt.1d-14 .or. abs(momentum).gt. 1d-14) then
             read_evolution_parameters = .true.
         endif
 
-        if(q1target .ne. -10000000) then
+        if(q1target .gt. -9999999) then
             Q20target = 0.5 * (2*q1target + q2target)
             Q22target = 1.5 *    q2target /sqrt(6.0)
         endif

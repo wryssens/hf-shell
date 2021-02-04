@@ -150,7 +150,7 @@ contains
             pab = (-1)**(int(qj(a) + qj(b)) + J + 1)
             pcd = (-1)**(int(qj(c) + qj(d)) + J + 1)
 
-            if(qt(a).eq.qt(b)) then
+            if(abs(qt(a)-qt(b)).lt.1d-8) then
               ! pp and nn matrix elements
               vorbit(b,a,c,d,J+1) = v * pab
               vorbit(a,b,d,c,J+1) = v * pcd
@@ -249,7 +249,7 @@ contains
                             &    cg1 * cg2 * vorbit(aa,bb,cc,dd,J+1)
                         enddo
 
-                        if( isolevel(a) .eq. isolevel(b)) then
+                        if( abs(isolevel(a) - isolevel(b)).lt.1d-8) then
                             if(aa .eq. bb) then
                                 vint(a,b,c,d) = vint(a,b,c,d) * sqrt(2.0)   
                             endif
@@ -331,7 +331,7 @@ contains
                         sd =int((-1)**(jlevel(d) - mlevel(d) + llevel(d)))
                         vt(a,b,c,d) = vt(a,b,c,d) * sb * sd
 
-                        if( isolevel(a) .eq. isolevel(b)) then
+                        if( abs(isolevel(a) - isolevel(b)).lt.1d-8) then
                             if(aa .eq. bb) then
                                 vt(a,b,c,d) = vt(a,b,c,d) * sqrt(2.0)   
                             endif

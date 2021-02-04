@@ -96,8 +96,8 @@ contains
       do i=1,proton_lev
         do j=1,proton_lev  
             if(parlevel(i) .eq. parlevel(j)) then
-              if(mlevel(i) .eq. mlevel(j)) then
-                if(jlevel(i) .eq. jlevel(j)) then
+              if(abs(mlevel(i) - mlevel(j)).lt.1d-6) then
+                if(abs(jlevel(i) - jlevel(j)).lt.1d-6) then
                   kappa_HFB(i,j) = 0.1
                   kappa(i,j)     = 0.1
                   ! We don't explicitly antisymmetrize, as kappa is only half 
@@ -112,8 +112,8 @@ contains
       do i=proton_lev+1, nlev
         do j=proton_lev+1,nlev  
             if(parlevel(i) .eq. parlevel(j)) then
-              if(mlevel(i) .eq. mlevel(j)) then
-                if(jlevel(i) .eq. jlevel(j)) then
+              if(abs(mlevel(i) - mlevel(j)).lt.1d-6) then
+                if(abs(jlevel(i) - jlevel(j)).lt.1d-6) then
                   kappa_HFB(i,j) = 0.1
                   kappa(i,j)     = 0.1
                 endif
@@ -197,13 +197,13 @@ contains
       HFBgaps = constructgaps(HFbasis,kappa) 
 
       ! c) Obtain the correct chemical potential for every isospin
-      if(protons.ne.0) then
+      if(abs(protons).gt.1d-3) then
         call HFB_findfermi(beta, chempot(1),hfenergies(1:x),                 &
         &                  HFBgaps(1:x,1:x),protons,                         &
         &                  bogo(1:2*x,1:2*x), qpe(1:2*x), parlevel(1:x),     &
         &                  config(1:2*x))      
       endif
-      if(neutrons.ne.0) then
+      if(abs(neutrons).gt.1d-3) then
         call HFB_findfermi(beta,chempot(2),hfenergies(x+1:y),                &
         &                  HFBgaps(x+1:y,x+1:y),neutrons,                    &
         &                  bogo(2*x+1:2*y,2*x+1:2*y), qpe(2*x+1:2*y),        & 
@@ -430,7 +430,7 @@ contains
     A  = X1 ; B  = X2 
     FA = FX1; FB = FX2
     Found = .false.    
-    if (A .eq. B) then 
+    if (abs(A-B).lt.1d-14) then 
       !-------------------------------------------------------------------------
       ! This signals that FA = FB is zero within the tolerance.
       ! Either near-converged HFB or HF case of completely broken-down pairing
@@ -469,14 +469,14 @@ contains
       ! Note: the tolerance is on the precision of the Fermi energy,
       ! NOT the nearness of the particle number to the targeted value.
       !----------------------------------------------------------------
-      if ( abs(XM) .le. Tol .or. FB .eq. 0.0d0 ) then
+      if ( abs(XM) .le. Tol .or. abs(FB) .lt. Tol ) then
         Lambda =  B
         Found = .true. 
         cycle
       endif
       if ( abs(E) .ge. Tol .and. abs(FA) .gt. abs(FB) ) then
         S = FB/FA
-        if ( A .eq. C ) then
+        if ( abs(A-C).lt.Tol ) then
           P = 2.0d0 * XM * S
           Q = 1.0d0 - S
         else

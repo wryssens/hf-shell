@@ -89,13 +89,13 @@ contains
 
       !-------------------------------------------------------------------------
       ! b) Obtain the correct chemical potential for every isospin
-      if(protons.ne.0) then        
+      if(abs(protons).gt.1d-3) then        
         call BCS_findfermi(beta, chempot(1),hfenergies(1:x)  ,BCSgaps(1:x),    & 
         &                                                               protons)
       else
         chempot(1) = 0.00
       endif      
-      if(neutrons.ne.0) then        
+      if(abs(neutrons).gt.1d-3) then        
         call BCS_findfermi(beta, chempot(2),hfenergies(x+1:y),BCSgaps(x+1:y),  & 
         &                                                              neutrons)
       else
@@ -104,14 +104,14 @@ contains
 
       !-------------------------------------------------------------------------
       ! c) Calculate the occupation factors V^2 and U^2
-      if(protons.ne.0) then
+      if(abs(protons).gt.1d-3) then 
         call BCS_occupations(chempot(1), hfenergies(1:x)  ,BCSgaps(1:x),       &
         &                    U_hf(1:x), V_hf(1:x))
       else
         V_hf(1:x) = 0
         U_hf(1:x) = 1  
       endif
-      if(neutrons.ne.0) then
+      if(abs(neutrons).gt.1d-3) then
         call BCS_occupations(chempot(2), hfenergies(x+1:y),BCsgaps(x+1:y),     &
         &                    U_hf(x+1:y), V_hf(x+1:y))
       else
@@ -354,7 +354,7 @@ contains
     A  = X1 ; B  = X2 
     FA = FX1; FB = FX2
     Found = .false.    
-    if (A .eq. B) then 
+    if (abs(A - B).lt.1d-12) then 
       !-------------------------------------------------------------------------
       ! This signals that FA = FB is zero within the tolerance.
       ! Either near-converged HFB or HF case of completely broken-down pairing
@@ -393,14 +393,14 @@ contains
       ! Note: the tolerance is on the precision of the Fermi energy,
       ! NOT the nearness of the particle number to the targeted value.
       !----------------------------------------------------------------
-      if ( abs(XM) .le. Tol .or. FB .eq. 0.0d0 ) then
+      if ( abs(XM) .le. Tol .or. abs(FB) .lt. 1d-14 ) then
         Lambda =  B
         Found = .true. 
         cycle
       endif
       if ( abs(E) .ge. Tol .and. abs(FA) .gt. abs(FB) ) then
         S = FB/FA
-        if ( A .eq. C ) then
+        if ( abs(A - C) .lt. Tol ) then
           P = 2.0d0 * XM * S
           Q = 1.0d0 - S
         else

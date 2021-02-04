@@ -133,9 +133,11 @@ contains
           if(ta.ne.tb) cycle
 
           tphase = (-1)**(jlevel(k) - mlevel(k) + llevel(k))
-          if(jlevel(i) .eq. jlevel(k) .and. llevel(i) .eq. llevel(k)) then
+          if(abs(jlevel(i) - jlevel(k)).lt.1d-8 .and.  &
+          &  abs(llevel(i) - llevel(k)).lt.1d-8) then
             ma = mlevel(i) ; mb = -mlevel(k)
-            if( (mb+1 .eq. ma) .or. (mb-1 .eq. ma)) then
+            if( (abs(mb+1-ma) .lt. 1d-8) .or.  &
+                (abs(mb-1-ma) .lt. 1d-8)) then
               Jx(i,k) = sqrt(jlevel(i)*(jlevel(i)+1)-ma*mb) * tphase
             endif 
           endif
@@ -155,10 +157,12 @@ contains
           ma = mlevel(i) ; mb = -mlevel(k)
           tphase = (-1)**(jlevel(k) - mlevel(k) + llevel(k))
 
-          if(jlevel(i) .eq. jlevel(k) .and. llevel(i) .eq. llevel(k) ) then
-            if( (mb+1 .eq. ma)) then
+          if(abs(jlevel(i) - jlevel(k)).lt.1d-8 .and.  &
+          &  abs(llevel(i) - llevel(k)).lt.1d-8) then
+
+            if( abs(mb+1-ma) .lt. 1d-8) then
               Jy(i,k) = sqrt(jlevel(i)*(jlevel(i)+1)-ma*mb) * tphase
-            elseif((mb-1 .eq. ma)) then
+            elseif(abs(mb-1-ma) .lt. 1d-8) then
               Jy(i,k) =-sqrt(jlevel(i)*(jlevel(i)+1)-ma*mb) * tphase
             endif 
           endif

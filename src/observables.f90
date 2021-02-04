@@ -303,7 +303,8 @@ contains
       q1 = Q0 * cos(Gam) - 1.0/sqrt(3.0) * Q0  * sin(Gam)
       q2 = 2.0/sqrt(3.0) * Q0 * sin(Gam)
       
-      if(constrainttype .gt. 1 .and. (Q20c .eq. -1 .or. Q22c .eq. -1)) then 
+      if(constrainttype .gt. 1 .and. &
+      &               (abs(Q20c+1) .lt. 1d-3 .or. abs(Q22c+1) .lt. 1d-3)) then 
           ! We need to estimate a good value for Q20c and Q22c
           Q20squared = 0
           Q22squared = 0
@@ -317,10 +318,10 @@ contains
               Q22squared = Q22squared + Q222(i,j) * rho(j,i) * 2 ! time-reversal
             enddo
           enddo
-          if(Q20c .eq. -1.0) then
+          if(abs(Q20c+1) .lt. 1d-3) then
               Q20c = 1.0/(2 * Q20squared)
           endif
-          if(Q22c .eq. -1.0) then
+          if(abs(Q22c+1) .lt. 1d-3) then
               Q22c = 1.0/(2 * Q22squared)
           endif
       endif

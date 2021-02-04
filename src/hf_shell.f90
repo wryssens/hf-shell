@@ -168,7 +168,7 @@ end program
   
       ! a) Relative change in energy
       dE = abs((total_energy(1) - total_energy(2))/total_energy(1))
-      if(dE .gt. e_prec .and. total_energy(2) .ne. 0.0d0) then
+      if(dE .gt. e_prec .and. abs(total_energy(2)) .gt. 1d-6) then
           converged = .false.
           return
       endif   

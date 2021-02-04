@@ -281,7 +281,7 @@ contains
       projectedpartition     = sum(Z) + inversetemp * (Venergy - sum(trh)) 
 
       ! Checking for NaNs
-      if(projectedpartition .ne. projectedpartition) projectedpartition=0 
+      if(projectedpartition .gt. projectedpartition) projectedpartition=0 
       if(inversetemp.gt.70 .or. inversetemp.lt.0) projectedpartition = 0
   end subroutine projectThermalHFB
 

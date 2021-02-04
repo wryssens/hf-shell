@@ -82,7 +82,7 @@ contains
 
     running_count = 0
 
-    if(neutrons.eq.0) return
+    if(abs(neutrons).lt.1d-3) return
     allocate(indices(neutron_lev))
     indices = orderenergies(hfenergies(proton_lev+1:nlev))
     do i=1, neutron_lev 

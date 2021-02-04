@@ -9,7 +9,7 @@ MODDIR :=   mod
 CXX :=   gfortran
 
 ifneq (,$(findstring gfortran,$(CXX)))
-	CXXFLAGS := -O3 -J$(MODDIR) -Wall -Wno-maybe-uninitialized
+	CXXFLAGS := -O3 -J$(MODDIR) -Wall -Wno-maybe-uninitialized -Wextra
 else ifeq ($(CXX),ifort)
 	CXXFLAGS := -O3 -no-wrap-margin -module $(MODDIR)
 endif
