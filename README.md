@@ -93,5 +93,7 @@ After running the calculations, the figures of the paper can be reproduced by ru
 
 If you use this code in research work, please consider citing us: 
 
->W. Ryssens & Y. Alhassid,  
->*Finite temperature mean-field approximations for shell model Hamiltonians; the code HF-SHELL*, submitted to EPJA.
+> W. Ryssens & Y. Alhassid,  
+> *Finite temperature mean-field approximations for shell model Hamiltonians; the code HF-SHELL*,  Eur. Phys. J. A 57, 76 (2021).
+> https://doi.org/10.1140/epja/s10050-021-00365-3
+
